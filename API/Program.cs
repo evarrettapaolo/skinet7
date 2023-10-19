@@ -1,5 +1,5 @@
-using Core.Entities;
-using Core.Interfaces;
+using API.Extensions;
+using API.Middleware;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,26 +7,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-//DbContext Class
-builder.Services.AddDbContext<StoreContext>(options =>
-{
-    options.UseSqlite(builder.Configuration.GetConnectionString("Default"));
-});
-//Product Repository class
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-//GenericRepository, generic type container 
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-//Type automapper, used in DTO
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+//Extension method for services
+builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseStatusCodePagesWithReExecute("/errors/{0}"); //ErrorController
+
 if (app.Environment.IsDevelopment())
 {
+    // app.UseDeveloperExceptionPage(); //Show exception log, enable by default
     app.UseSwagger();
     app.UseSwaggerUI();
 }
@@ -49,7 +42,7 @@ try
     await context.Database.MigrateAsync(); //Migration
     await StoreContextSeed.SeedAsync(context); //Seeding
 }
-catch(Exception ex) 
+catch (Exception ex)
 {
     logger.LogError(ex, "An error occurred during migration");
 }
