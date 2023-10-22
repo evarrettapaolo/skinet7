@@ -11,5 +11,12 @@ namespace Core.Interfaces
         //For specification pattern and Navigation property
         Task<T> GetEntityWithSpec(ISpecification<T> spec);
         Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec);
+        
+        /// <summary>
+        /// Returns the quantity of an item
+        /// </summary>
+        /// <param name="spec"></param>
+        /// <returns></returns>
+        Task<int> CountAsync(ISpecification<T> spec);
     }
 }

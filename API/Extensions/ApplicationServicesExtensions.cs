@@ -14,17 +14,22 @@ namespace API.Extensions
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
             //DbContext Class
             services.AddDbContext<StoreContext>(options =>
             {
                 options.UseSqlite(config.GetConnectionString("Default"));
             });
+
             //Product Repository class
             services.AddScoped<IProductRepository, ProductRepository>();
+
             //GenericRepository, generic type container 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
             //Type automapper, used in DTO
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             //Override default exception handling feature
             services.Configure<ApiBehaviorOptions>(options =>
             {
@@ -42,6 +47,15 @@ namespace API.Extensions
 
                     return new BadRequestObjectResult(errorResponse);
                 };
+            });
+
+            //Cors service
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                });
             });
 
             return services;

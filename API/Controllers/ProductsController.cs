@@ -1,5 +1,6 @@
 using API.DTOs;
 using API.Errors;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -26,7 +27,7 @@ namespace API.Controllers
 
         //Product table action methods
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)] //Exception handling
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProductToReturnDTO>> GetProduct(int id)
         {
@@ -35,22 +36,27 @@ namespace API.Controllers
 
             if(product == null) return NotFound(new ApiResponse(404));
 
-            //Used automapper to conver to DTO object
+            //Used automapper to convert to DTO object
             return _mapper.Map<Product, ProductToReturnDTO>(product);
 
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductToReturnDTO>>> GetProducts()
+        public async Task<ActionResult<Pagination<ProductToReturnDTO>>> GetProducts([FromQuery]ProductSpecParams productParams)
         {
             //Apply specification pattern for product table
-            var spec = new ProductsWithTypesAndBrandsSpecification();
+            var spec = new ProductsWithTypesAndBrandsSpecification(productParams);
+            
+            var countSpec = new ProductWithFiltersForCountSpecification(productParams);
+
+            var totalItems = await _productsRepo.CountAsync(countSpec);
 
             var products = await _productsRepo.ListAsync(spec); //Takes spec pattern
 
-            //Used automapper to conver to DTO object
-            return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDTO>>(products));
-            
+            //Used automapper to convert to DTO object
+            var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDTO>>(products);
+
+            return Ok(new Pagination<ProductToReturnDTO>(productParams.PageIndex, productParams.PageSize, totalItems, data));
         }
 
 
