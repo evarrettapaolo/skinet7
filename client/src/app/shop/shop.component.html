@@ -1,0 +1,68 @@
+<div class="container">
+    <div class="row">
+        <section class="col-3">
+            <!-- filtering and sorting start -->
+            <h5 class="text-warning ms-3">Sort</h5>
+            <!-- sorting drop down list -->
+            <select name="" id="" class="form-select mb-4" (change)="onSortSelected($event)">
+                <option *ngFor="let sort of sortOptions" [value]="sort.value">
+                    {{sort.name}}
+                </option>
+            </select>
+            <h5 class="text-warning ms-3">Brands</h5>
+            <ul class="list-group my-3">
+                <!-- stateful tag brand filter -->
+                <li class="list-group-item" 
+                    *ngFor="let brand of brands"
+                    [class.active]="brand.id === shopParams.brandId"
+                    [value]="brand.id"
+                    (click)="onBrandSelected(brand.id)"
+                >{{brand.name}}</li>
+            </ul>
+            <h5 class="text-warning ms-3">Types</h5>
+            <ul class="list-group my-3">
+                <!-- stateful tag type filter -->
+                <li class="list-group-item" 
+                    *ngFor="let type of types"
+                    [class.active]="type.id === shopParams.typeId"
+                    [value]="type.id"
+                    (click)="onTypeSelected(type.id)"
+                >{{type.name}}</li>
+            </ul>
+            <!-- filtering and sorting end -->
+        </section>
+        <section class="col-9">
+            <!-- product cards header -->
+            <div class="d-flex justify-content-between align-items-center pb-2">
+                <app-paging-header 
+                    [totalCount]="totalCount"
+                    [pageNumber]="shopParams.pageNumber"
+                    [pageSize]="shopParams.pageSize"
+                ></app-paging-header>
+                <!-- search bar and buttons -->
+                <div class="d-flex mt-2">
+                    <input (keyup.enter)="onSearch()" type="text" placeholder="Search" class="form-control me-2" #search>
+                    <button class="btn btn-outline-primary mx-2" (click)="onSearch()">Search</button>
+                    <button class="btn btn-outline-success mx-2" (click)="onReset()">Reset</button>
+                </div>
+            </div>
+
+            <div class="row row-cols-3 g-3 mb-4">
+                <!-- card template start -->
+                <div class="col" *ngFor="let product of products">
+                    <!-- component takes value from loop -->
+                    <app-product-item [product]="product"></app-product-item> 
+                </div>
+                <!-- card template ends -->
+            </div>
+            <!-- pagination -->
+            <div class="d-flex justify-content-center" *ngIf="totalCount > 0">
+                <app-pager
+                    [totalCount]="totalCount"
+                    [pageSize]="shopParams.pageSize"
+                    (pageChanged)="onPageChanged($event)" 
+                ></app-pager>
+            </div>
+        </section>
+    </div>
+</div>
