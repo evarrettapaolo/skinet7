@@ -27,8 +27,8 @@ namespace API.Controllers
 
         //Product table action methods
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)] //Exception handling
-        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        // [ProducesResponseType(StatusCodes.Status200OK)] //Exception handling
+        // [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProductToReturnDTO>> GetProduct(int id)
         {
             var spec = new ProductsWithTypesAndBrandsSpecification(id);

@@ -10,3 +10,16 @@
     right: 32px;
 }
 
+a {
+    text-decoration: none;
+    color: #343a40;
+
+    &.active {  //SCSS functionality
+        color: orange;
+    }
+}
+
+.logo {
+    max-height: 70px;
+    cursor: pointer;
+}
