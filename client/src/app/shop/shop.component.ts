@@ -4,6 +4,7 @@ import { ShopService } from './shop.service';
 import { Brand } from '../shared/models/brand';
 import { Type } from '../shared/models/type';
 import { ShopParams } from '../shared/models/shopParams';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-shop',
@@ -24,7 +25,8 @@ export class ShopComponent implements OnInit{
   totalCount = 0;
   @ViewChild('search') searchTerm?: ElementRef; //Takes the html search template variable
 
-  constructor(private shopService: ShopService) {} 
+  constructor(private shopService: ShopService, private bcService: BreadcrumbService) {
+  } 
 
   ngOnInit(): void {
     this.getProducts();

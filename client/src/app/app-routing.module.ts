@@ -7,12 +7,12 @@ import { ServerErrorComponent } from './core/server-error/server-error.component
 
 //Actual route endpoints, client-side, lazy loading applied
 const routes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', component: HomeComponent, data: {breadcrumb: 'Home'}}, //Added property for bread crumb
   {path: 'test-error', component: TestErrorComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'server-error', component: ServerErrorComponent},
-  {path: 'shop', loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule)},
-  {path: '**', redirectTo:'', pathMatch: 'full'}, //Not found url, strictly redirected to home URL -> ''
+  {path: 'shop',loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule), data: {breadcrumb: 'shop'}}, //data does not pass, Shop module handles its own router and module
+  {path: '**', redirectTo:'', pathMatch: 'full'} //Not found url, strictly redirected to home URL -> ''
 ];
 
 @NgModule({
