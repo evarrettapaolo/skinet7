@@ -1,18 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { TestErrorComponent } from './core/test-error/test-error.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
+import { TestErrorComponent } from './core/test-error/test-error.component';
+import { HomeComponent } from './home/home.component';
 
-//Actual route endpoints, client-side, lazy loading applied
 const routes: Routes = [
-  {path: '', component: HomeComponent, data: {breadcrumb: 'Home'}}, //Added property for bread crumb
+  {path: '', component: HomeComponent, data: {breadcrumb: 'Home'}},
   {path: 'test-error', component: TestErrorComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'server-error', component: ServerErrorComponent},
-  {path: 'shop',loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule), data: {breadcrumb: 'shop'}}, //data does not pass, Shop module handles its own router and module
-  {path: '**', redirectTo:'', pathMatch: 'full'} //Not found url, strictly redirected to home URL -> ''
+  {path: 'shop', loadChildren: () => import('./shop/shop.module').then(m => m.ShopModule), data: {breadcrumb: 'Shop'}},
+  {path: '**', redirectTo: '', pathMatch: 'full'},
 ];
 
 @NgModule({

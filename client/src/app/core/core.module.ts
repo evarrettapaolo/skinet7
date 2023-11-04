@@ -22,7 +22,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     CommonModule,
     RouterModule,
     ToastrModule.forRoot({
-      positionClass: 'toast-bottom-right',  //configuration added
+      positionClass: 'toast-bottom-right',
       preventDuplicates: true
     }),
     BreadcrumbModule,
@@ -31,8 +31,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   exports: [
     NavBarComponent,
     SectionHeaderComponent,
-    NgxSpinnerModule,
+    NgxSpinnerModule
   ]
-
 })
 export class CoreModule { }

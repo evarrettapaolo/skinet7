@@ -4,7 +4,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { ShopComponent } from './shop.component';
 
 const routes: Routes = [
-  {path: '',component: ShopComponent, data: {breadcrumb: {label: 'shop'}}},
+  {path: '',component: ShopComponent, data: {breadcrumb: 'shop'}},
   {path: ':id', component: ProductDetailsComponent, data: {breadcrumb: {alias: 'productDetails'}}},
 ]
 
@@ -13,6 +13,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes), //Child of parent routing module
   ],
-  exports: [RouterModule]
+  exports: [
+    RouterModule
+  ]
 })
 export class ShopRoutingModule { }
