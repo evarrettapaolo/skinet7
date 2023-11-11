@@ -1,6 +1,7 @@
 using API.Errors;
 using Core.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
@@ -33,6 +34,9 @@ namespace API.Extensions
 
             //Product Repository class
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            //Identity & JWT token service
+            services.AddScoped<ITokenService, TokenService>();
 
             //GenericRepository, generic type container 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

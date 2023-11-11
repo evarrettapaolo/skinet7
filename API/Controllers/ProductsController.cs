@@ -1,4 +1,4 @@
-using API.DTOs;
+using API.Dtos;
 using API.Errors;
 using API.Helpers;
 using AutoMapper;
