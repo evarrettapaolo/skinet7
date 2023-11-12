@@ -13,9 +13,6 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
 
             //DbContext Class
             services.AddDbContext<StoreContext>(options =>
@@ -54,7 +51,7 @@ namespace API.Extensions
                         .SelectMany(x => x.Value.Errors)
                         .Select(x => x.ErrorMessage).ToArray();
 
-                    var errorResponse = new ApiValidationResponse
+                    var errorResponse = new ApiValidationErrorResponse
                     {
                         Errors = error
                     };
