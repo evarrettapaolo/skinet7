@@ -1,13 +1,13 @@
-import * as cuid from "cuid"
+import * as cuid from 'cuid';
 
 export interface BasketItem {
-id: number;
-productName: string;
-price: number;
-quantity: number;
-pictureUrl: string;
-brand: string;
-type: string;
+    id: number;
+    productName: string;
+    price: number;
+    quantity: number;
+    pictureUrl: string;
+    brand: string;
+    type: string;
 }
 
 export interface Basket {
@@ -23,5 +23,5 @@ export class Basket implements Basket {
 export interface BasketTotals {
     shipping: number;
     subtotal: number;
-    total: number
+    total: number;
 }

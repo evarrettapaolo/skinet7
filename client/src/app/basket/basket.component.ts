@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BasketService } from './basket.service';
 import { BasketItem } from '../shared/models/basket';
+import { BasketService } from './basket.service';
 
 @Component({
   selector: 'app-basket',
@@ -16,6 +16,7 @@ export class BasketComponent {
   }
 
   removeItem(id: number, quantity: number) {
-    this.basketService.removeItemForBasket(id, quantity);
+    this.basketService.removeItemFromBasket(id, quantity);
   }
+
 }

@@ -8,11 +8,11 @@ import { Product } from 'src/app/shared/models/product';
   styleUrls: ['./product-item.component.scss']
 })
 export class ProductItemComponent {
-  @Input() product?: Product; //holds data from parent component
+  @Input() product?: Product;
 
-  constructor(private baseketService: BasketService) {}
+  constructor(private basketService: BasketService) {}
 
   addItemToBasket() {
-    this.product && this.baseketService.addItemToBasket(this.product);
+    this.product && this.basketService.addItemToBasket(this.product);
   }
 }

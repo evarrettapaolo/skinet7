@@ -14,34 +14,34 @@ export class TestErrorComponent {
   constructor(private http: HttpClient) {}
 
   get404Error() {
-    this.http.get(this.baseUrl + 'products/42').subscribe ({
+    this.http.get(this.baseUrl + 'products/42').subscribe({
       next: response => console.log(response),
-      error: error => console.log(error),
-      complete: () => {} 
+      error: error => console.log(error)
     })
   }
+
   get500Error() {
-    this.http.get(this.baseUrl + 'buggy/servererror').subscribe ({
+    this.http.get(this.baseUrl + 'buggy/servererror').subscribe({
       next: response => console.log(response),
-      error: error => console.log(error),
-      complete: () => {} 
+      error: error => console.log(error)
     })
   }
+
   get400Error() {
-    this.http.get(this.baseUrl + 'buggy/badrequest').subscribe ({
+    this.http.get(this.baseUrl + 'buggy/badrequest').subscribe({
       next: response => console.log(response),
-      error: error => console.log(error),
-      complete: () => {} 
+      error: error => console.log(error)
     })
   }
+
   get400ValidationError() {
-    this.http.get(this.baseUrl + 'products/fortytwo').subscribe ({
+    this.http.get(this.baseUrl + 'products/fortytwo').subscribe({
       next: response => console.log(response),
       error: error => {
-        console.log(error),
+        console.log(error);
         this.validationErrors = error.errors;
-      },
-      complete: () => {} 
+      }
     })
   }
+
 }

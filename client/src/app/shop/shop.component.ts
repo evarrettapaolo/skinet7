@@ -1,32 +1,29 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Product } from '../shared/models/product';
-import { ShopService } from './shop.service';
 import { Brand } from '../shared/models/brand';
-import { Type } from '../shared/models/type';
+import { Product } from '../shared/models/product';
 import { ShopParams } from '../shared/models/shopParams';
-import { BreadcrumbService } from 'xng-breadcrumb';
+import { Type } from '../shared/models/type';
+import { ShopService } from './shop.service';
 
 @Component({
   selector: 'app-shop',
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss']
 })
-export class ShopComponent implements OnInit{
-  //Properties
+export class ShopComponent implements OnInit {
+  @ViewChild('search') searchTerm?: ElementRef;
   products: Product[] = [];
   brands: Brand[] = [];
   types: Type[] = [];
   shopParams = new ShopParams();
   sortOptions = [
     {name: 'Alphabetical', value: 'name'},
-    {name: 'Price Low to High', value: 'priceAsc'},
-    {name: 'Price High to Low', value: 'priceDesc'},
+    {name: 'Price: Low to high', value: 'priceAsc'},
+    {name: 'Price: High to low', value: 'priceDesc'},
   ];
   totalCount = 0;
-  @ViewChild('search') searchTerm?: ElementRef; //Takes the html search template variable
 
-  constructor(private shopService: ShopService, private bcService: BreadcrumbService) {
-  } 
+  constructor(private shopService: ShopService) {}
 
   ngOnInit(): void {
     this.getProducts();
@@ -34,39 +31,32 @@ export class ShopComponent implements OnInit{
     this.getTypes();
   }
 
-  //Filtering added using Id's
   getProducts() {
     this.shopService.getProducts(this.shopParams).subscribe({
-      //modified for pagination
       next: response => {
-        this.products = response.data
+        this.products = response.data;
         this.shopParams.pageNumber = response.pageIndex;
         this.shopParams.pageSize = response.pageSize;
         this.totalCount = response.count;
       },
-      error: error => console.log(error),
-      complete: () => {}
+      error: error => console.log(error)
     })
   }
 
-  //Filtering: all selected
-  getBrands(){
+  getBrands() {
     this.shopService.getBrands().subscribe({
-      next: response => this.brands = [{id: 0, name: 'All'}, ...response], //concatenate the rest through spread operator
-      error: error => console.log(error),
-      complete: () => {}
+      next: response => this.brands = [{id: 0, name: 'All'}, ...response],
+      error: error => console.log(error)
     })
   }
 
-  getTypes(){
+  getTypes() {
     this.shopService.getTypes().subscribe({
-      next: response => this.types = [{id: 0, name: 'All'}, ...response], //concatenate the rest through spread operator
-      error: error => console.log(error),
-      complete: () => {}
+      next: response => this.types = [{id: 0, name: 'All'}, ...response],
+      error: error => console.log(error)
     })
   }
 
-  //Filtering: specific selected
   onBrandSelected(brandId: number) {
     this.shopParams.brandId = brandId;
     this.shopParams.pageNumber = 1;
@@ -79,30 +69,26 @@ export class ShopComponent implements OnInit{
     this.getProducts();
   }
 
-  //Sorting
   onSortSelected(event: any) {
-    this.shopParams.sort = event?.target.value;
+    this.shopParams.sort = event.target.value;
     this.getProducts();
   }
 
-  //Pagination: traversing
   onPageChanged(event: any) {
-    if(this.shopParams.pageNumber !== event) {
+    if (this.shopParams.pageNumber !== event) {
       this.shopParams.pageNumber = event;
       this.getProducts();
     }
   }
 
-  //Searching
   onSearch() {
     this.shopParams.search = this.searchTerm?.nativeElement.value;
     this.shopParams.pageNumber = 1;
     this.getProducts();
   }
 
-  //Search reset
   onReset() {
-    if(this.searchTerm) this.searchTerm.nativeElement.value = '';
+    if (this.searchTerm) this.searchTerm.nativeElement.value = '';
     this.shopParams = new ShopParams();
     this.getProducts();
   }

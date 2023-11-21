@@ -8,7 +8,6 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 })
 export class SectionHeaderComponent {
 
-  //Service can be accessed to HTML since it's public
   constructor(public bcService: BreadcrumbService) {}
 
 }

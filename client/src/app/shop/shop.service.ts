@@ -1,46 +1,41 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Brand } from '../shared/models/brand';
 import { Pagination } from '../shared/models/pagination';
 import { Product } from '../shared/models/product';
-import { Brand } from '../shared/models/brand';
-import { Type } from '../shared/models/type';
 import { ShopParams } from '../shared/models/shopParams';
-import { environment } from 'src/environments/environment';
+import { Type } from '../shared/models/type';
 
 @Injectable({
-  providedIn: 'root' //Make it usable in the App-Root component
+  providedIn: 'root'
 })
 export class ShopService {
-  // baseUrl = 'https://localhost:5001/api/'
-  baseUrl = environment.apiUrl;
+  baseUrl = 'https://localhost:5001/api/';
 
   constructor(private http: HttpClient) { }
 
-  //Method
   getProducts(shopParams: ShopParams) {
     let params = new HttpParams();
-    
-    if(shopParams.brandId > 0) params = params.append('brandId', shopParams.brandId);
-    if(shopParams.typeId > 0) params = params.append('typeId', shopParams.typeId);
+
+    if (shopParams.brandId > 0) params = params.append('brandId', shopParams.brandId);
+    if (shopParams.typeId) params = params.append('typeId', shopParams.typeId);
     params = params.append('sort', shopParams.sort);
     params = params.append('pageIndex', shopParams.pageNumber);
     params = params.append('pageSize', shopParams.pageSize);
-    if(shopParams.search) params = params.append('search', shopParams.search);
+    if (shopParams.search) params = params.append('search', shopParams.search);
 
-
-    return this.http.get<Pagination<Product[]>>(this.baseUrl + 'products',{params});
+    return this.http.get<Pagination<Product[]>>(this.baseUrl + 'products', {params});
   }
 
-  //Used in Filtering
+  getProduct(id: number) {
+    return this.http.get<Product>(this.baseUrl + 'products/' + id);
+  }
+
   getBrands() {
     return this.http.get<Brand[]>(this.baseUrl + 'products/brands');
   }
+
   getTypes() {
     return this.http.get<Type[]>(this.baseUrl + 'products/types');
-  }
-
-  //Get product item 
-  getProduct(id: number) {
-    return this.http.get<Product>(this.baseUrl + 'products/' + id);
   }
 }

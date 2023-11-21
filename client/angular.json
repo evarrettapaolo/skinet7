@@ -35,7 +35,7 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
-              "node_modules/bootswatch/dist/united/bootstrap.min.css",
+              "node_modules/bootswatch/dist/superhero/bootstrap.min.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/ngx-spinner/animations/timer.css",
               "node_modules/ngx-toastr/toastr.css",
@@ -71,13 +71,7 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.ts"
-                }
-              ]
+              "namedChunks": true
             }
           },
           "defaultConfiguration": "production"
