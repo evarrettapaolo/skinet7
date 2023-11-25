@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Core.Entities;
+using Core.Entities.OrderAggregate;
 
 namespace Infrastructure.Data
 {
@@ -32,6 +33,15 @@ namespace Infrastructure.Data
                 var productsData = File.ReadAllText("../Infrastructure/Data/SeedData/products.json");
                 var products = JsonSerializer.Deserialize<List<Product>>(productsData);
                 context.Products.AddRange(products);
+            }
+
+            //Seeding deliver methods table
+            if (!context.DeliveryMethods.Any())
+            {
+                //directory starts from solution level
+                var deliveryData = File.ReadAllText("../Infrastructure/Data/SeedData/delivery.json");
+                var methods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryData);
+                context.DeliveryMethods.AddRange(methods);
             }
             
             //Save any changes to database

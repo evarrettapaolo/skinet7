@@ -13,6 +13,11 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+            //Unit of work; for repository stack
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            //Order Service class
+            services.AddScoped<IOrderService, OrderService>();
 
             //DbContext Class
             services.AddDbContext<StoreContext>(options =>

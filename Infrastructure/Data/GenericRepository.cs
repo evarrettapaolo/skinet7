@@ -43,5 +43,21 @@ namespace Infrastructure.Data
             //Use the static method of Specification evaluator class
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
         }
+
+        public void Add(T entity)
+        {
+            _context.Set<T>().Add(entity);
+        }
+
+        public void Update(T entity)
+        {
+            _context.Set<T>().Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public void Delete(T entity)
+        {
+            _context.Set<T>().Remove(entity);
+        }
     }
 }
