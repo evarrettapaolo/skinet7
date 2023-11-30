@@ -12,6 +12,7 @@
             <h5 class="text-warning ms-3 mt-2">Brands</h5>
             <ul class="list-group my-3">
                 <li class="list-group-item"
+                    style="cursor: default;"
                     *ngFor="let brand of brands"
                     [class.active]="brand.id === shopParams.brandId"
                     [value]="brand.id"
@@ -20,6 +21,7 @@
             <h5 class="text-warning ms-3 mt-2">Types</h5>
             <ul class="list-group my-3">
                 <li class="list-group-item"
+                    style="cursor: default;"
                     *ngFor="let type of types"
                     [class.active]="type.id === shopParams.typeId"
                     [value]="type.id"
