@@ -13,6 +13,9 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
+            //Payment service, related to Stripe
+            services.AddScoped<IPaymentService, PaymentService>();
+
             //Unit of work; for repository stack
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
