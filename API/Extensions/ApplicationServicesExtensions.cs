@@ -28,7 +28,7 @@ namespace API.Extensions
       //DbContext Class
       services.AddDbContext<StoreContext>(options =>
       {
-        options.UseSqlite(config.GetConnectionString("Default"));
+        options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
       });
 
       //Redis, Handles client cart
@@ -58,18 +58,18 @@ namespace API.Extensions
       {
         options.InvalidModelStateResponseFactory = actionContext =>
               {
-            var error = actionContext.ModelState
-                      .Where(e => e.Value.Errors.Count > 0)
-                      .SelectMany(x => x.Value.Errors)
-                      .Select(x => x.ErrorMessage).ToArray();
+                var error = actionContext.ModelState
+                          .Where(e => e.Value.Errors.Count > 0)
+                          .SelectMany(x => x.Value.Errors)
+                          .Select(x => x.ErrorMessage).ToArray();
 
-            var errorResponse = new ApiValidationErrorResponse
-            {
-              Errors = error
-            };
+                var errorResponse = new ApiValidationErrorResponse
+                {
+                  Errors = error
+                };
 
-            return new BadRequestObjectResult(errorResponse);
-          };
+                return new BadRequestObjectResult(errorResponse);
+              };
       });
 
       //Cors service
@@ -77,8 +77,9 @@ namespace API.Extensions
       {
         options.AddPolicy("CorsPolicy", policy =>
               {
-            policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
-          });
+                // policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+                policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+              });
       });
 
       return services;

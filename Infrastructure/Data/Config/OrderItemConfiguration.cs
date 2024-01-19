@@ -8,7 +8,7 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
-            ////make sure the ItemOrdered property is present, the inner property of this property type will be verified through dto
+            //make sure the ItemOrdered property is present, the inner property of this property type will be verified through dto
             builder.OwnsOne(i => i.ItemOrdered, io => {io.WithOwner();});
 
             builder.Property(i => i.Price)

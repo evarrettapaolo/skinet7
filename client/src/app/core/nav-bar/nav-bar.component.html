@@ -1,18 +1,19 @@
 <header class="d-flex flex-row align-items-center justify-content-between p-3 px-4 mb-3 
     bg-primary fixed-top shadow-sm">
-    <img src="/assets/images/logo.png" alt="logo" class="logo" style="max-height: 70px;" routerLink="/">
-    <nav class="my-2 text-uppercase fs-4">
+    <img src="/assets/images/logo.png" alt="logo" class="logo" style="max-height: 65px;" routerLink="/">
+    <nav class="my-2 text-uppercase fs-5">
         <a class="p-2" 
             routerLink="/" 
             routerLinkActive="active" 
+            class="m-2"
             [routerLinkActiveOptions]="{exact: true}"
         >Home</a>
-        <a class="p-2" routerLink="/shop" routerLinkActive="active">Shop</a>
-        <a class="p-2" routerLink="/test-error" routerLinkActive="active">Errors</a>
+        <a class="p-2 m-2" routerLink="/shop" routerLinkActive="active">Shop</a>
+        <a class="p-2 m-2" routerLink="/test-error" routerLinkActive="active">Errors</a>
     </nav>
     <div class="d-flex align-items-center">
         <a routerLink="/basket" class="position-relative">
-            <i class="fa fa-shopping-cart fa-2x me-5 text-dark"></i>
+            <i class="fa fa-shopping-cart fa-2x me-4 text-dark"></i>
             <div *ngIf="(basketService.basketSource$ | async) as basket" class="cart-no">
                 {{getCount(basket.items)}}
             </div>
@@ -23,7 +24,7 @@
         </ng-container>
 
         <ng-container *ngIf="accountService.currentUser$ | async as user">
-            <div class="dropdown ms-3 me-5" style="cursor: pointer;" dropdown>
+            <div class="dropdown ms-3 me-3" style="cursor: pointer;" dropdown>
                 <a dropdownToggle class="dropdown-toggle">
                     <strong>Welcome {{user.displayName}}</strong>
                 </a>

@@ -17,7 +17,7 @@ namespace Infrastructure.Data.Config
             builder.Property(s => s.Status)  //convert enum to string
                 .HasConversion(
                     o => o.ToString(),
-                    o => (OrderStatus) Enum.Parse(typeof(OrderStatus), o)
+                    o => (OrderStatus)Enum.Parse(typeof(OrderStatus), o)
                 );
 
             builder.HasMany(o => o.OrderItems).WithOne().OnDelete(DeleteBehavior.Cascade);
